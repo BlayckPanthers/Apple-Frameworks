@@ -9,13 +9,14 @@ import SwiftUI
 
 struct FrameworkView: View {
     
+    // StateObject, keeps in memory even if destroy or render the view
+    @StateObject var viewModel = FrameworkViewModel()
+    
     let columns: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
-    
-    
     
     var body: some View {
         NavigationView{
@@ -23,9 +24,15 @@ struct FrameworkView: View {
                 LazyVGrid(columns: columns) {
                     ForEach(MockData.frameworks) { framework in
                         FrameworkTitleView(framework: framework)
+                            .onTapGesture {
+                                viewModel.selectedFramework = framework
+                            }
                     }
                 }
             }.navigationTitle("🍎 Frameworks")
+            .sheet(isPresented: $viewModel.isShowingDetailView, content: {
+                DetailFrameworkView(framework: viewModel.selectedFramework ?? MockData.standeloneFramework)
+            })
         }
         
     }
