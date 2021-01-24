@@ -12,19 +12,15 @@ struct FrameworkView: View {
     // StateObject, keeps in memory even if destroy or render the view
     @StateObject var viewModel = FrameworkViewModel()
     
-    let columns: [GridItem] = [
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible())
-    ]
-    
+    // Sheet is listening to $viewModel.isShowingDetailView changes (thanks to published)
     var body: some View {
         NavigationView{
             ScrollView{
-                LazyVGrid(columns: columns) {
+                LazyVGrid(columns: viewModel.columns) {
                     ForEach(MockData.frameworks) { framework in
                         FrameworkTitleView(framework: framework)
                             .onTapGesture {
+                                // selectedFramework didSet set viewModel.isShowingDetailView to true
                                 viewModel.selectedFramework = framework
                             }
                     }
@@ -45,21 +41,3 @@ struct FrameworkView_Previews: PreviewProvider {
     }
 }
 
-struct FrameworkTitleView: View {
-    
-    let framework: Framework
-    
-    var body: some View {
-        VStack {
-            Image(framework.imageName)
-                .resizable()
-                .frame(width: 90, height: 90)
-            Text(framework.name)
-                .font(.title2)
-                .fontWeight(.semibold)
-                .scaledToFit()
-                .minimumScaleFactor(0.5)
-        }
-        .padding()
-    }
-}

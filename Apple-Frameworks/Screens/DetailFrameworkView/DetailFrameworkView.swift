@@ -14,32 +14,34 @@ struct DetailFrameworkView: View {
     // Binding makes isShowingdetailView to the same value to the parent view
     @Binding var isShowingDetailView: Bool
     
+    @State private var isShowingSafariView = false
+    
     var body: some View {
         VStack() {
-            
-            HStack {
-                Spacer()
-                Button {
-                    isShowingDetailView = false
-                } label: {
-                    //Color.label -> white in darkmode, black in whitemode
-                    Image(systemName: "xmark")
-                        .foregroundColor(Color(.label))
-                        .imageScale(.large)
-                        .frame(width: 44, height: 44)
-                }
-            }.padding()
+            XDismissButton(isShowingDetailView: $isShowingDetailView)
             
             Spacer()
+            
             FrameworkTitleView(framework: framework)
+            
             Text(framework.description)
                 .font(.body)
                 .padding()
             
             Spacer()
-            AFButton(title: "Learn more", backColor: .red, textColor: .white)
+            
+            Button {
+                isShowingSafariView = true
+            } label : {
+                AFButton(title: "Learn more", backColor: .red, textColor: .white)
+            }
+            
             
         }
+        .fullScreenCover(isPresented: $isShowingSafariView, content: {
+            SafariView(url: URL(string: framework.urlString) ?? URL(string: "www.apple.com")!)
+                .edgesIgnoringSafeArea(.all)
+        })
     }
 }
 

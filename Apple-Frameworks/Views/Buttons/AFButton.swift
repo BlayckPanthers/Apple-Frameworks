@@ -14,17 +14,15 @@ struct AFButton: View {
     let textColor: Color
     
     var body: some View {
-        Button {
-            
-        } label: {
-            Text(title)
-                .font(.title2)
-                .fontWeight(.semibold)
-                .frame(width: 280, height: 50)
-                .background(backColor)
-                .foregroundColor(textColor)
-                .cornerRadius(10)
-        }
+
+        Text(title)
+            .font(.title2)
+            .fontWeight(.semibold)
+            .frame(width: 280, height: 50)
+            .background(backColor)
+            .foregroundColor(textColor)
+            .cornerRadius(10)
+        
     }
 }
 
