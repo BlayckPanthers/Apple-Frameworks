@@ -15,21 +15,19 @@ struct FrameworkView: View {
     // Sheet is listening to $viewModel.isShowingDetailView changes (thanks to published)
     var body: some View {
         NavigationView{
-            ScrollView{
-                LazyVGrid(columns: viewModel.columns) {
-                    ForEach(MockData.frameworks) { framework in
+            
+            List {
+                ForEach(MockData.frameworks) { framework in
+                    NavigationLink(destination:
+                                    DetailFrameworkView(framework: framework,
+                                    isShowingDetailView: $viewModel.isShowingDetailView)){
                         FrameworkTitleView(framework: framework)
-                            .onTapGesture {
-                                // selectedFramework didSet set viewModel.isShowingDetailView to true
-                                viewModel.selectedFramework = framework
-                            }
+
                     }
                 }
             }.navigationTitle("🍎 Frameworks")
-            .sheet(isPresented: $viewModel.isShowingDetailView, content: {
-                DetailFrameworkView(framework: viewModel.selectedFramework ?? MockData.standeloneFramework, isShowingDetailView: $viewModel.isShowingDetailView)
-            })
         }
+        .accentColor(Color(.label))
         
     }
 }

@@ -18,10 +18,6 @@ struct DetailFrameworkView: View {
     
     var body: some View {
         VStack() {
-            XDismissButton(isShowingDetailView: $isShowingDetailView)
-            
-            Spacer()
-            
             FrameworkTitleView(framework: framework)
             
             Text(framework.description)
