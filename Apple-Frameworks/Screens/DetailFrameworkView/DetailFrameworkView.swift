@@ -18,8 +18,18 @@ struct DetailFrameworkView: View {
     
     var body: some View {
         VStack() {
-            FrameworkTitleView(framework: framework)
-            
+            //FrameworkTitleView(framework: framework)
+            VStack {
+                Image(framework.imageName)
+                    .resizable()
+                    .frame(width: 70, height: 70)
+                Text(framework.name)
+                    .font(.largeTitle)
+                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    .scaledToFit()
+                    .minimumScaleFactor(0.5)
+            }
+            .padding()
             Text(framework.description)
                 .font(.body)
                 .padding()
